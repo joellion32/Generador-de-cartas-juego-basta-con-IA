@@ -14,7 +14,7 @@ export default function ResultScreen() {
     const navigation = useNavigation<any>();
 
     const startNewGame = () => {
-        navigation.navigate('Loading',  {mode: 'local'});
+        navigation.navigate('Loading',  {mode: 'ia'});
     }
 
     const startNewPlayers = () => {
