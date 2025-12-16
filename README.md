@@ -1,11 +1,14 @@
 # Basta Card IA
 
-App móvil para jugar con cartas al juego basta, esta app ha sido diseñada por si tienes un disposivo basta y las cartas que trae el juego, ya las conocen todas por esta app generara 100 cartas todas diferentes utilizando IA para así hacer mas divertido el juego.
+App móvil de cartas para jugar Basta
 
-Lo hice con la motivación de seguir jugando a este juego con mi pareja
+Esta aplicación fue creada para quienes ya tienen el juego Basta y conocen de memoria las cartas originales. La app genera 100 cartas totalmente diferentes utilizando inteligencia artificial, aportando variedad y haciendo cada partida más divertida y sorprendente.
 
-Con todo mi amor para Krystal H. Martínez este proyecto es para tí
-TE AMO 
+La desarrollé con la motivación de seguir disfrutando este juego junto a mi pareja y darle una nueva vida a nuestras partidas.
+
+Con todo mi amor para Krystal H. Martínez.
+Este proyecto es para ti.
+Te amo ❤️
 
 Resumen
 
