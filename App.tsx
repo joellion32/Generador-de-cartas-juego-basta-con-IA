@@ -7,19 +7,16 @@ import { useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { colors } from './src/config/theme';
 
-
 // Set the animation options. This is optional.
 SplashScreen.setOptions({
   duration: 1000,
   fade: true,
 });
 
-
 export default function App() {
   const scheme = useColorScheme();
 
   useEffect(() => {
-
     if (scheme === 'dark') {
       NavigationBar.setBackgroundColorAsync(colors.background);
       NavigationBar.setButtonStyleAsync('light');

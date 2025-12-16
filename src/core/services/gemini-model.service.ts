@@ -13,26 +13,19 @@ export async function main(
 
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: `Genera ${numberOfCards} cartas de un juego de observación y deducción, similares a la carta que dice "Algo que veas alrededor".
+      contents: `Genera ${numberOfCards} cartas tipo observación/deducción (ej: "Algo que veas alrededor").
 
-Cada carta debe cumplir las siguientes condiciones:
-- Tener un titulo corto y claro.
-- Representar un contexto diferente, como personas, peliculas, objetos, acciones, emociones, lugares, situaciones cotidianas o conceptos abstractos.
-- Estar redactada en español neutro.
-- Ser apta para todo publico.
-- No repetir titulos ni contextos.
+    Salida: SOLO JSON válido.
+      Array de ${numberOfCards} objetos con estructura exacta:
+      {"id":1,"title":"Un actor"}
 
-Formato de salida obligatorio:
-- Devuelve unicamente un JSON valido, sin texto adicional.
-- El JSON debe ser un array de ${numberOfCards} objetos.
-- Cada objeto debe tener exactamente esta estructura:
-{"id": 1, "title": "Un actor"}
-
-Reglas adicionales:
-- El campo id debe ir del 1 al ${numberOfCards}, sin saltos.
-- El campo title debe ser una frase corta, sin signos de puntuacion al final.
-- No incluyas descripciones, solo el title.
-- No uses emojis.`,
+    Reglas:
+    - id: 1..${numberOfCards} (sin saltos)
+    - title: corto, español neutro, apto todo público
+    - Contextos todos distintos (personas, objetos, acciones, emociones, lugares, conceptos, etc.)
+    - No repetir títulos
+    - Sin descripciones, emojis ni puntuación final
+`,
     });
 
     // Algunas versiones del SDK exponen text() como método

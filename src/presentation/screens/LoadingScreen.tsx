@@ -62,7 +62,6 @@ export default function LoadingScreen({ route }) {
         }
     };
 
-
     return (
         <SafeAreaView style={[globalStyles.container, { justifyContent: 'center', alignItems: 'center' }]}>
             <Image style={{ width: 150, height: 150 }} source={require('../../../assets/logo.png')} />

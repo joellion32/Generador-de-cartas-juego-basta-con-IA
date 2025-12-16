@@ -50,7 +50,6 @@ export default function NewGameScreen() {
         setName('');
     }
 
-
     const newGame = async () => {
         if (playersNames.length === 0) {
             showAlert('Alerta', 'No se puede iniciar el juego sin jugadores');

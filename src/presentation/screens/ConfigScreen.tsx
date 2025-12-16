@@ -15,7 +15,6 @@ export default function ConfigScreen() {
 
   useEffect(() => {
     loadData()
-    
   }, [])
 
   // cargar informacion del la configuracion desde el storage
