@@ -7,6 +7,7 @@ import { PlayerCardComponent } from '../components/PlayerCardComponent'
 import { selectPlayerWinner } from '../../config/helpers/select-player-winner.helper'
 import { ButtonComponent } from '../components/ButtonComponent'
 import { useNavigation } from '@react-navigation/native'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function ResultScreen() {
     const { players } = usePlayersStore()
@@ -22,7 +23,7 @@ export default function ResultScreen() {
     }
 
     return (
-        <View style={globalStyles.container}>
+        <SafeAreaView style={globalStyles.container}>
             <HeaderComponent title="RESULTADOS DE LA PARTIDA" showSettingsButton={false} />
 
             <View style={styles.resultContainer}>
@@ -53,7 +54,7 @@ export default function ResultScreen() {
                 <ButtonComponent size='normal' title="REPETIR JUEGO" onPress={startNewGame} />
                 <ButtonComponent size='normal' title="NUEVO JUEGO" onPress={startNewPlayers} />
             </View>
-        </View>
+        </SafeAreaView>
     )
 }
 

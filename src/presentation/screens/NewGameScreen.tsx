@@ -8,13 +8,13 @@ import { PlayerCardComponent } from '../components/PlayerCardComponent'
 import { useNewPlayer } from '../hooks/useAddNewPlayerHook'
 import { useAlert } from '../hooks/useAlertHook'
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { getItem, setItem } from '../../core/services/local-storage.service'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function NewGameScreen() {
     const navigation = useNavigation<any>();
     const { playersNames, addPlayer } = useNewPlayer()
     const { showAlert, showAlertWithCancelButton } = useAlert()
-    const [name, setName] = useState('')    
+    const [name, setName] = useState('')
 
     useFocusEffect(
         useCallback(() => {
@@ -57,46 +57,43 @@ export default function NewGameScreen() {
             return;
         }
 
-        // guardar configuracion 10 cartas por defecto, si no hay total de cartas guardados
-        const totalCards = await getItem({ key: "totalCards" });
-        if (totalCards == null || totalCards.length === 0) {
-            await setItem({ key: "totalCards", value: process.env.EXPO_PUBLIC_DEFAULT_CARDS })
-        }
         navigation.navigate('Loading', { mode: 'ia' })
     }
 
     return (
-        <ScrollView style={globalStyles.container}>
-            <View style={{ paddingHorizontal: 20, gap: 15 }}>
-                <HeaderComponent title="AGREGAR JUGADORES" />
+        <SafeAreaView style={globalStyles.container}>
+            <ScrollView>
+                <View style={{ paddingHorizontal: 20, gap: 15 }}>
+                    <HeaderComponent title="AGREGAR JUGADORES" />
 
-                <TextboxComponent value={name} onChangeText={setName} />
+                    <TextboxComponent value={name} onChangeText={setName} />
 
-                <ButtonComponent
-                    title="Agregar"
-                    size="normal"
-                    onPress={() => addNewPlayer(name)}
-                />
+                    <ButtonComponent
+                        title="Agregar"
+                        size="normal"
+                        onPress={() => addNewPlayer(name)}
+                    />
 
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 5 }}>
-                    {
-                        playersNames.map((player, index) => (
-                            <PlayerCardComponent
-                                key={index}
-                                name={player.name}
-                                size="normal"
-                            />
-                        ))
-                    }
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 5 }}>
+                        {
+                            playersNames.map((player, index) => (
+                                <PlayerCardComponent
+                                    key={index}
+                                    name={player.name}
+                                    size="normal"
+                                />
+                            ))
+                        }
+                    </View>
+
+                    <ButtonComponent
+                        title="Comenzar Juego"
+                        size="normal"
+                        onPress={newGame}
+                    />
                 </View>
-
-                <ButtonComponent
-                    title="Comenzar Juego"
-                    size="normal"
-                    onPress={newGame}
-                />
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 

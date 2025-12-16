@@ -6,6 +6,7 @@ import { TextboxComponent } from '../components/TextboxComponent'
 import { ButtonComponent } from '../components/ButtonComponent'
 import { setItem, getItem } from '../../core/services/local-storage.service'
 import { useAlert } from '../hooks/useAlertHook'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function ConfigScreen() {
   const [totalCards, setTotalCards] = useState(10)
@@ -40,17 +41,17 @@ export default function ConfigScreen() {
   }
 
   return (
-    <View style={[globalStyles.container, { alignItems: 'center' }]}>
+    <SafeAreaView style={[globalStyles.container, { alignItems: 'center' }]}>
       <HeaderComponent title='CONFIGURACIÓN' showBackButton={true} showSettingsButton={false} />
 
       <View style={{gap: 30}}>
         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 20 }}>
           <Text style={globalStyles.textBoxInput}>TOTAL CARTAS</Text>
-          <TextboxComponent style={{ width: 100 }} value={totalCards.toString()} onChangeText={setTotalCards} placeholder={totalCards.toString()} />
+          <TextboxComponent keyboardType='number-pad' style={{ width: 100 }} value={totalCards.toString()} onChangeText={setTotalCards} placeholder={totalCards.toString()} />
         </View>
 
         <ButtonComponent size='large' title='GUARDAR CAMBIOS' onPress={saveConfiguration} />
       </View>
-    </View>
+    </SafeAreaView>
   )
 }

@@ -4,17 +4,25 @@
     "slug": "basta-card-ia",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon-android.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FC1933"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.basta-card-ia"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/logo.png",
+        "foregroundImage": "./assets/icon-android.png",
         "backgroundColor": "#ffffff"
+      },
+      "ios": {
+        "icon": "./assets/icon-ios.png"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.joellion32.bastacardia"
@@ -28,7 +36,8 @@
         {
           "backgroundColor": "#FC1933",
           "image": "./assets/splash-icon.png",
-          "resizeMode": "contain"
+          "imageWidth": "100%",
+          "imageHeight": "100%"
         }
       ]
     ],

@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     color: 'white',
-    fontSize: 42,
+    fontSize: 35,
     fontWeight: '900',
     textAlign: 'center',
     letterSpacing: 1,

@@ -47,8 +47,7 @@ export const HeaderComponent: React.FC<HeaderComponentProps> = ({ title, showSet
 
 const styles = StyleSheet.create({
     header: {
-        height: 125,
-        paddingTop: 20,
+        height: 100,
         backgroundColor: colors.background,
         justifyContent: 'center',
         alignItems: 'center',

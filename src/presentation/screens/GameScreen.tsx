@@ -9,6 +9,7 @@ import { usePlayersStore } from '../store/player-store'
 import { PlayerCardComponent } from '../components/PlayerCardComponent'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { useAlert } from '../hooks/useAlertHook'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function GameScreen() {
   const cards = useCardStore.getState().cards;
@@ -31,7 +32,7 @@ export default function GameScreen() {
 );
 
   return (
-    <View style={[globalStyles.container]}>
+    <SafeAreaView style={[globalStyles.container]}>
       <HeaderComponent title="BASTA CARTAS" />
 
       <View style={styles.cardContainer}>
@@ -62,7 +63,7 @@ export default function GameScreen() {
 
 
       <ButtonComponent size='large' title='TERMINAR JUEGO' onPress={() => navigation.navigate('Result')} />
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -77,16 +78,15 @@ const styles = StyleSheet.create({
     height: '30%',
     flexDirection: 'row',
     bottom: 20,
+    margin: "auto",
+    paddingVertical: 20,
   },
   resetContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 30,
-    bottom: 10,
     zIndex: 10
   }
 })
-function onPress(value: string): void {
-  throw new Error('Function not implemented.')
-}
+
 

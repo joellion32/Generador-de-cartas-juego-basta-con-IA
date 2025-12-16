@@ -6,6 +6,7 @@ import { useCardStore } from '../store/cards-store';
 import { useGeminiModel } from '../hooks/useGeminiModel'
 import { usePlayersStore } from '../store/player-store';
 import { getItem, setItem } from '../../core/services/local-storage.service';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function LoadingScreen({ route }) {
     const navigation = useNavigation<any>();
@@ -63,9 +64,9 @@ export default function LoadingScreen({ route }) {
 
 
     return (
-        <View style={[globalStyles.container, { justifyContent: 'center', alignItems: 'center' }]}>
+        <SafeAreaView style={[globalStyles.container, { justifyContent: 'center', alignItems: 'center' }]}>
             <Image style={{ width: 150, height: 150 }} source={require('../../../assets/logo.png')} />
             <Text style={{ color: 'white', marginTop: 20, fontSize: 28, fontWeight: 'bold' }}>Cargando{dots}</Text>
-        </View>
+        </SafeAreaView>
     )
 }

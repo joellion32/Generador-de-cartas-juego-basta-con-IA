@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput, StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { View, TextInput, StyleSheet, StyleProp, ViewStyle, KeyboardTypeOptions } from 'react-native';
 import { colors } from '../../config/theme';
 
 interface TextboxComponentProps {
@@ -7,12 +7,14 @@ interface TextboxComponentProps {
   onChangeText?: (text: any) => void;
   placeholder?: any;
   style?: StyleProp<ViewStyle>;
+  keyboardType?: KeyboardTypeOptions
 }
 
 export const TextboxComponent: React.FC<TextboxComponentProps> = ({
   value = '',
   onChangeText,
   placeholder = 'NOMBRE JUGADOR',
+  keyboardType = 'default',
   style
 }) => {
 
@@ -23,6 +25,7 @@ export const TextboxComponent: React.FC<TextboxComponentProps> = ({
   return (
     <View style={[styles.container, style]}>
       <TextInput
+        keyboardType={keyboardType}
         value={value}
         onChangeText={handleChange}
         placeholder={placeholder}
