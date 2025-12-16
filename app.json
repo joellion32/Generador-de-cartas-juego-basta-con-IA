@@ -8,9 +8,11 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#FC1933"
+        "backgroundColor": "#FC1933",
+        "image": "./assets/splash-icon.png",
+        "resizeMode": "contain",
+        "imageWidth": "100%",
+        "imageHeight": "100%"
     },
     "ios": {
       "supportsTablet": true,
@@ -36,6 +38,7 @@
         {
           "backgroundColor": "#FC1933",
           "image": "./assets/splash-icon.png",
+          "resizeMode": "contain",
           "imageWidth": "100%",
           "imageHeight": "100%"
         }
