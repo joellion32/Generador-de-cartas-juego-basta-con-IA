@@ -1,12 +1,17 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Animated, Dimensions, PanResponder } from "react-native";
 
-export const useTinderCarousel = (data?) => {
+export const useTinderCarousel = (data?: { id: any }[]) => {
     const { width } = Dimensions.get('window');
     const SWIPE_THRESHOLD = width * 0.25;
     const position = useRef(new Animated.ValueXY()).current;
     const [index, setIndex] = useState(0);
+    const indexRef = useRef(index);
     const VISIBLE_CARDS = 5;
+
+    useEffect(() => {
+        indexRef.current = index;
+    }, [index]);
 
     const panResponder = useRef(
         PanResponder.create({
@@ -17,12 +22,11 @@ export const useTinderCarousel = (data?) => {
             },
 
             onPanResponderRelease: (_, gesture) => {
-                if (index === data.length - 1) {
+                const length = data?.length ?? 0;
+                if (indexRef.current === length - 1) {
                     resetPosition();
                     return;
                 }
-
-
                 if (gesture.dx > SWIPE_THRESHOLD) {
                     forceSwipe('right');
                 } else if (gesture.dx < -SWIPE_THRESHOLD) {
@@ -54,7 +58,36 @@ export const useTinderCarousel = (data?) => {
     // completar swipe
     const onSwipeComplete = () => {
         position.setValue({ x: 0, y: 0 });
-        setIndex((prev) => prev + 1);
+        const length = data?.length ?? 0;
+        const newIndex = indexRef.current + 1;
+        if (newIndex < length) setIndex(newIndex);
+    };
+
+    // avanzar con animación (llamable desde padre)
+    const nextCard = () => {
+        const length = data?.length ?? 0;
+        const current = indexRef.current;
+        if (current < length - 1) {
+            const x = width;
+            Animated.timing(position, {
+                toValue: { x, y: 0 },
+                duration: 250,
+                useNativeDriver: false,
+            }).start(() => {
+                position.setValue({ x: 0, y: 0 });
+                setIndex(current + 1);
+            });
+        }
+    };
+
+    // avanzar sin animación
+    const skipCard = () => {
+        const length = data?.length ?? 0;
+        const current = indexRef.current;
+        if (current < length - 1) {
+            position.setValue({ x: 0, y: 0 });
+            setIndex(current + 1);
+        }
     };
 
     /* 🎨 Animaciones de cartas detrás */
@@ -107,6 +140,8 @@ export const useTinderCarousel = (data?) => {
         forceSwipe,
         resetPosition,
         onSwipeComplete,
+        nextCard,
+        skipCard,
         getCardStyle
     }
 }

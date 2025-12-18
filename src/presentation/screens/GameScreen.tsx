@@ -1,5 +1,5 @@
-import { StyleSheet, View, ScrollView, TouchableOpacity, Image, BackHandler, Alert } from 'react-native'
-import React, { useCallback } from 'react'
+import { StyleSheet, View, ScrollView, TouchableOpacity, Image, BackHandler, Text } from 'react-native'
+import React, { useCallback, useRef } from 'react'
 import { globalStyles } from '../../config/theme'
 import { HeaderComponent } from '../components/HeaderComponent'
 import { useCardStore } from '../store/cards-store'
@@ -12,39 +12,48 @@ import { useAlert } from '../hooks/useAlertHook'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function GameScreen() {
-  const cards = useCardStore.getState().cards;
+  const {cards} = useCardStore();
   const { players, addPoints, getPoints } = usePlayersStore()
   const navigation = useNavigation<any>();
-  const {showAlertWithCancelButton} = useAlert()
+  const { showAlertWithCancelButton } = useAlert()
+  const carouselRef = useRef<any>(null);
 
   useFocusEffect(
-  useCallback(() => {
-    const onBackPress = () => {
-      showAlertWithCancelButton('Salir', '¿Seguro que deseas salir?', () => BackHandler.exitApp())
-      return true;
-    };
+    useCallback(() => {
+      const onBackPress = () => {
+        showAlertWithCancelButton('Salir', '¿Seguro que deseas salir?', () => BackHandler.exitApp())
+        return true;
+      };
 
-    const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+      const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
 
-    return () =>
-      subscription.remove();
-  }, [])
-);
+      return () =>
+        subscription.remove();
+    }, [])
+  );
+
+  const addPointNextSwipe = (playerName) => {
+      addPoints(playerName, 1)
+      // Llamar al método expuesto por el componente TinderCarousel
+      carouselRef.current?.nextCard?.();
+    }
+
 
   return (
     <SafeAreaView style={[globalStyles.container]}>
       <HeaderComponent title="BASTA CARTAS" />
 
       <View style={styles.cardContainer}>
-        <TinderCarousel data={cards} />
+        <TinderCarousel ref={carouselRef} data={cards} />
       </View>
 
 
-     <View style={styles.resetContainer}>
-         <TouchableOpacity onPress={() => navigation.navigate('Loading', {mode: 'local'})}  accessibilityLabel="Reset">
-              <Image style={{ width: 50, height: 50 }} source={require('../../../assets/reset.png')} />
+      <View style={styles.resetContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('Loading', { mode: 'local' })} accessibilityLabel="Reset">
+          <Image style={{ width: 45, height: 45 }} source={require('../../../assets/reset.png')} />
         </TouchableOpacity>
-     </View>
+      </View>
+
 
       <ScrollView
         showsHorizontalScrollIndicator={false}
@@ -54,15 +63,15 @@ export default function GameScreen() {
         {
           players.map((player, index) => (
             <View style={{ margin: 10, justifyContent: 'center', alignItems: 'center' }} key={index}>
-              <PlayerCardComponent name={`${player.name} - ${getPoints(player.name)}`} />
-              <ButtonComponent size='small' title='SUMAR PUNTO' onPress={() => addPoints(player.name, 1)} />
+              <PlayerCardComponent size='normal' name={`${player.name} - ${getPoints(player.name)}`} />
+              <ButtonComponent size='small' title='SUMAR PUNTO' onPress={() => addPointNextSwipe(player.name)} />
             </View>
           ))
         }
       </ScrollView>
 
 
-      <ButtonComponent size='large' title='TERMINAR JUEGO' onPress={() => navigation.navigate('Result')} />
+      <ButtonComponent size='normal' title='TERMINAR JUEGO' onPress={() => navigation.navigate('Result')} />
     </SafeAreaView>
   )
 }
@@ -75,7 +84,7 @@ const styles = StyleSheet.create({
     bottom: 35
   },
   scoreContainer: {
-    height: '30%',
+    height: '20%',
     flexDirection: 'row',
     bottom: 20,
     margin: "auto",

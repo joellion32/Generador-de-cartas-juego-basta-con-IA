@@ -9,7 +9,7 @@ import { colors } from './src/config/theme';
 
 // Set the animation options. This is optional.
 SplashScreen.setOptions({
-  duration: 1000,
+  duration: 20000,
   fade: true,
 });
 

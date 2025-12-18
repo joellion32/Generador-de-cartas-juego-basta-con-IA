@@ -26,7 +26,7 @@ export default function ConfigScreen() {
   // Guardar configuracion 
   const saveConfiguration = async () => {
     try {
-      if(totalCards >= limitCards){
+      if(totalCards > limitCards){
         showAlert('Advertencia', `Solo se puede tener un límite de ${limitCards} cartas`)
         setTotalCards(limitCards)
         return;

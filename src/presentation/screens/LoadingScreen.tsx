@@ -39,6 +39,7 @@ export default function LoadingScreen({ route }) {
                 text = await generateContent(Number(totalCards));
                 console.log("ia:", text)
                 await setItem({ key: "cards", value: text }) // almacenar en el local storage
+                resetPoints()  // reiniciar puntos
             }
             // modo (local) muestra el contenido desde el local storage
             else if (mode == 'local') {
@@ -51,7 +52,6 @@ export default function LoadingScreen({ route }) {
 
             // guardar datos en el store zustand
             useCardStore.getState().setCards(mapped);
-            resetPoints()  // reiniciar puntos
         } catch (e) {
             console.error('Error generating or parsing cards:', e);
             // Fallback adicional si algo sale mal con el parseo

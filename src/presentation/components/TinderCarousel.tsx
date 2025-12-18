@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import {
   View,
   Text,
@@ -16,9 +16,13 @@ interface Props {
 }
 const { width } = Dimensions.get('window');
 
+const TinderCarousel = forwardRef(function TinderCarousel({ data }: Props, ref) {
+  const {panResponder, VISIBLE_CARDS, index, getCardStyle, nextCard, skipCard} = useTinderCarousel(data)
 
-export default function TinderCarousel({ data }: Props) {
-  const {panResponder, VISIBLE_CARDS, index, getCardStyle} = useTinderCarousel(data)
+  useImperativeHandle(ref, () => ({
+    nextCard, 
+    skipCard,
+  }), [nextCard, skipCard])
 
   return (
     <>
@@ -48,13 +52,16 @@ export default function TinderCarousel({ data }: Props) {
 
             {/* Texto inferior */}
             <Text style={styles.footerText}>{isLastCard ? 'FIN DEL MAZO' : 'DESLIZA PARA VER MÁS'}</Text>
+            
           </Animated.View>
         );
       })
         .reverse()}
     </>
   );
-}
+})
+
+export default TinderCarousel;
 
 const styles = StyleSheet.create({
   card: {

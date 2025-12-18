@@ -56,7 +56,7 @@ export default function NewGameScreen() {
             return;
         }
 
-        navigation.navigate('Loading', { mode: 'ia' })
+        navigation.navigate('Loading', { mode: 'local' })
     }
 
     return (
