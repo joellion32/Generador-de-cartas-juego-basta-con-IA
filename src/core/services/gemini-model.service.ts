@@ -13,18 +13,12 @@ export async function main(
 
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: `Genera ${numberOfCards} cartas tipo observación/deducción (ej: "Algo que veas alrededor").
+      contents: `Genera JSON (array de ${numberOfCards} objetos) para juego Basta. Estructura: {"id":1..${numberOfCards},"title":"Algo que encuentras en el baño"} Reglas:
 
-    Salida: SOLO JSON válido.
-      Array de ${numberOfCards} objetos con estructura exacta:
-      {"id":1,"title":"Un actor"}
-
-    Reglas:
-    - id: 1..${numberOfCards} (sin saltos)
-    - title: corto, español neutro, apto todo público
-    - Contextos todos distintos (personas, objetos, acciones, emociones, lugares, conceptos, etc.)
-    - No repetir títulos
-    - Sin descripciones, emojis ni puntuación final
+  -Títulos cortos, español neutro, ATP.
+  -Contextos variados (objetos, lugares, emociones, etc).
+  -Que no se repitan y que sean aleatorias
+  -Sin puntos finales, emojis ni texto extra. Salida: SOLO JSON.
 `,
     });
 

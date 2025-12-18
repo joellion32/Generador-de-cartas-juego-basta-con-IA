@@ -10,7 +10,7 @@
     "splash": {
         "backgroundColor": "#FC1933",
         "image": "./assets/icon.png",
-        "resizeMode": "contain"
+        "imageWidth": 200
     },
     "ios": {
       "supportsTablet": true,
@@ -36,7 +36,7 @@
         {
           "backgroundColor": "#FC1933",
           "image": "./assets/icon.png",
-          "resizeMode": "contain"
+          "imageWidth": 200
         }
       ]
     ],
