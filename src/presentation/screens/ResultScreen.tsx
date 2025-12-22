@@ -1,21 +1,21 @@
-import { StyleSheet, View, Text, Image } from 'react-native'
+import { StyleSheet, View, Text, Image, FlatList } from 'react-native'
 import React from 'react'
 import { globalStyles } from '../../config/theme'
 import { HeaderComponent } from '../components/HeaderComponent'
 import { usePlayersStore } from '../store/player-store'
-import { PlayerCardComponent } from '../components/PlayerCardComponent'
 import { selectPlayerWinner } from '../../config/helpers/select-player-winner.helper'
 import { ButtonComponent } from '../components/ButtonComponent'
 import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { LeaderboardItem } from '../components/LeaderboardItem'
 
 export default function ResultScreen() {
-    const { players } = usePlayersStore()
+    const { players,  } = usePlayersStore()
     const winner = selectPlayerWinner(players);
     const navigation = useNavigation<any>();
 
     const startNewGame = () => {
-        navigation.navigate('Loading',  {mode: 'ia'});
+        navigation.navigate('Loading', { mode: 'ia' });
     }
 
     const startNewPlayers = () => {
@@ -27,14 +27,6 @@ export default function ResultScreen() {
             <HeaderComponent title="RESULTADOS DE LA PARTIDA" showSettingsButton={false} />
 
             <View style={styles.resultContainer}>
-                {
-                    players.map((player, index) => (
-                        <PlayerCardComponent key={index} name={`${player.name} \n ${player.points} Puntos`} />
-                    ))
-                }
-            </View>
-
-            <View style={styles.resultContainerFooter}>
                 {
                     winner === 1 ?
                         <>
@@ -50,9 +42,29 @@ export default function ResultScreen() {
                                 <Text style={globalStyles.subTitle}>SIN GANADOR</Text>
                             </>
                 }
+            </View>
 
-                <ButtonComponent size='normal' title="REPETIR JUEGO" onPress={startNewGame} />
-                <ButtonComponent size='normal' title="NUEVO JUEGO" onPress={startNewPlayers} />
+            <View style={globalStyles.scoreContainer}>
+                <FlatList
+                    data={players}
+                    keyExtractor={(_, index) => index.toString()}
+                    showsVerticalScrollIndicator={false}
+                    renderItem={({ item, index }) => (
+                        <LeaderboardItem
+                            rank={index + 1}
+                            name={item.name}
+                            score={item.points}
+                            isHighlighted
+                            onAdd={() => { }}
+                            onRemove={() => { }}
+                        />
+                    )}
+                />
+            </View>
+
+            <View style={styles.resultContainer}>
+                <ButtonComponent style={{ width: 300 }} size='normal' title="REPETIR JUEGO" onPress={startNewGame} />
+                <ButtonComponent style={{ width: 300 }} size='normal' title="NUEVO JUEGO" onPress={startNewPlayers} />
             </View>
         </SafeAreaView>
     )
@@ -60,12 +72,6 @@ export default function ResultScreen() {
 
 const styles = StyleSheet.create({
     resultContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-        padding: 20,
-    },
-    resultContainerFooter: {
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,

@@ -4,6 +4,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   GestureResponderEvent,
+  StyleProp,
+  ViewStyle
 } from 'react-native';
 
 type ButtonSize = 'small' | 'normal' | 'large';
@@ -13,6 +15,7 @@ interface ButtonComponentProps {
   onPress: (event: GestureResponderEvent) => void;
   size?: ButtonSize;
   disabled?: boolean;
+  style?: StyleProp<ViewStyle>
 }
 
 export const ButtonComponent: React.FC<ButtonComponentProps> = ({
@@ -20,12 +23,14 @@ export const ButtonComponent: React.FC<ButtonComponentProps> = ({
   onPress,
   size = 'normal',
   disabled = false,
+  style
 }) => {
   return (
     <TouchableOpacity
       style={[
         styles.base,
         styles[size],
+        style,
         disabled && styles.disabled,
       ]}
       activeOpacity={0.8}
@@ -43,7 +48,7 @@ const styles = StyleSheet.create({
   /* Base */
   base: {
     backgroundColor: '#F02B3A', // rojo del botón
-    borderRadius: 2,
+    borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
   },

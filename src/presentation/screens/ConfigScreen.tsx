@@ -49,7 +49,7 @@ export default function ConfigScreen() {
           <TextboxComponent keyboardType='number-pad' style={{ width: 100 }} value={totalCards.toString()} onChangeText={setTotalCards} placeholder={totalCards.toString()} />
         </View>
 
-        <ButtonComponent size='large' title='GUARDAR CAMBIOS' onPress={saveConfiguration} />
+        <ButtonComponent size='normal' title='GUARDAR CAMBIOS' onPress={saveConfiguration} />
       </View>
     </SafeAreaView>
   )

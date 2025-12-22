@@ -24,25 +24,36 @@ export const colors: ThemeColors = {
 
 
 export const globalStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.background,
-    },
-    title: {
-        color: colors.text,
-        textAlign: "center",    
-        fontSize: 25,
-        fontWeight: "bold", 
-    },
-    subTitle: {
-        color: colors.text,
-        textAlign: "center",    
-        fontSize: 25,
-        fontWeight: "bold", 
-    },
-    textBoxInput: {
-      color: colors.text,
-      fontSize: 18,
-      fontWeight: "bold"
-    }
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  title: {
+    color: colors.text,
+    textAlign: "center",
+    fontSize: 25,
+    fontWeight: "bold",
+  },
+  subTitle: {
+    color: colors.text,
+    textAlign: "center",
+    fontSize: 25,
+    fontWeight: "bold",
+  },
+  textBoxInput: {
+    color: colors.text,
+    fontSize: 18,
+    fontWeight: "bold"
+  },
+  scoreContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+    gap: 15
+  },
+  footerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 12,
+  },
 });

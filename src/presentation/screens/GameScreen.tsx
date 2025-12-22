@@ -1,19 +1,19 @@
-import { StyleSheet, View, ScrollView, TouchableOpacity, Image, BackHandler, Text } from 'react-native'
+import { StyleSheet, View, FlatList, BackHandler, Text } from 'react-native'
 import React, { useCallback, useRef } from 'react'
-import { globalStyles } from '../../config/theme'
+import { colors, globalStyles } from '../../config/theme'
 import { HeaderComponent } from '../components/HeaderComponent'
 import { useCardStore } from '../store/cards-store'
 import TinderCarousel from '../components/TinderCarousel'
 import { ButtonComponent } from '../components/ButtonComponent'
 import { usePlayersStore } from '../store/player-store'
-import { PlayerCardComponent } from '../components/PlayerCardComponent'
 import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { useAlert } from '../hooks/useAlertHook'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { LeaderboardItem } from '../components/LeaderboardItem'
 
 export default function GameScreen() {
-  const {cards} = useCardStore();
-  const { players, addPoints, getPoints } = usePlayersStore()
+  const { cards } = useCardStore();
+  const { players, addPoints, subtractPoints } = usePlayersStore()
   const navigation = useNavigation<any>();
   const { showAlertWithCancelButton } = useAlert()
   const carouselRef = useRef<any>(null);
@@ -33,69 +33,71 @@ export default function GameScreen() {
   );
 
   const addPointNextSwipe = (playerName) => {
-      addPoints(playerName, 1)
-      // Llamar al método expuesto por el componente TinderCarousel
-      carouselRef.current?.nextCard?.();
-    }
+    addPoints(playerName, 1)
+    // Llamar al método expuesto por el componente TinderCarousel
+    carouselRef.current?.nextCard?.();
+  }
+
+  console.log(players)
+
 
 
   return (
     <SafeAreaView style={[globalStyles.container]}>
       <HeaderComponent title="BASTA CARTAS" />
 
-      <View style={styles.cardContainer}>
-        <TinderCarousel ref={carouselRef} data={cards} />
+      <View style={styles.content}>
+        <View style={styles.cardContainer}>
+          <TinderCarousel ref={carouselRef} data={cards} />
+        </View>
+
+        <View style={globalStyles.scoreContainer}>
+          <Text style={[globalStyles.subTitle, { fontSize: 18, top: 5 }]}>PUNTUACIÓN</Text>
+          <FlatList
+            data={players}
+            keyExtractor={(_, index) => index.toString()}
+            showsVerticalScrollIndicator={false}
+            renderItem={({ item, index }) => (
+              <LeaderboardItem
+                rank={index + 1}
+                name={item.name}
+                score={item.points}
+                isHighlighted
+                scoreButtonsVisible={true}
+                onAdd={() => addPointNextSwipe(item.name)}
+                onRemove={() => subtractPoints(item.name, 1)}
+              />
+            )}
+          />
+        </View>
+
+        <View style={styles.footerContainer}>
+          <ButtonComponent style={{ width: 150, paddingHorizontal: 20, backgroundColor: colors.secondary }} size='normal' title='REINICIAR' onPress={() => navigation.navigate('Loading', { mode: 'local' })} />
+          <ButtonComponent style={{ width: 200 }} size='normal' title='FINALIZAR' onPress={() => navigation.navigate('Result')} />
+        </View>
       </View>
 
-
-      <View style={styles.resetContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate('Loading', { mode: 'local' })} accessibilityLabel="Reset">
-          <Image style={{ width: 45, height: 45 }} source={require('../../../assets/reset.png')} />
-        </TouchableOpacity>
-      </View>
-
-
-      <ScrollView
-        showsHorizontalScrollIndicator={false}
-        horizontal={true}
-        style={styles.scoreContainer}
-      >
-        {
-          players.map((player, index) => (
-            <View style={{ margin: 10, justifyContent: 'center', alignItems: 'center' }} key={index}>
-              <PlayerCardComponent size='normal' name={`${player.name} - ${getPoints(player.name)}`} />
-              <ButtonComponent size='small' title='SUMAR PUNTO' onPress={() => addPointNextSwipe(player.name)} />
-            </View>
-          ))
-        }
-      </ScrollView>
-
-
-      <ButtonComponent size='normal' title='TERMINAR JUEGO' onPress={() => navigation.navigate('Result')} />
     </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  content: {
+    flex: 1
+  },
   cardContainer: {
-    height: '50%',
-    justifyContent: 'center',
+    flex: 2,
     alignItems: 'center',
-    bottom: 35
+    paddingTop: 12,   // pequeño respiro visual
   },
-  scoreContainer: {
-    height: '20%',
+  footerContainer: {
+    height: 80,           // 🔥 altura fija
     flexDirection: 'row',
-    bottom: 20,
-    margin: "auto",
-    paddingVertical: 20,
-  },
-  resetContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 30,
-    zIndex: 10
-  }
-})
+    gap: 12,
+  },
+});
+
 
 

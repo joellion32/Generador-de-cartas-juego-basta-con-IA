@@ -13,13 +13,13 @@ export async function main(
 
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: `Genera JSON (array de ${numberOfCards} objetos) para juego Basta. Estructura: {"id":1..${numberOfCards},"title":"Algo que encuentras en el baño"} Reglas:
-
-  -Títulos cortos, español neutro, ATP.
-  -Contextos variados (objetos, lugares, emociones, etc).
-  -Que no se repitan y que sean aleatorias
-  -Sin puntos finales, emojis ni texto extra. Salida: SOLO JSON.
-`,
+      contents: `Genera JSON (array de ${numberOfCards} objetos) para juego Basta. Estructura: {"id":1..${numberOfCards},"title":"Algo que encuentras en el baño"} 
+      Reglas:
+        -Títulos cortos, español neutro, ATP.
+        -Contextos variados (objetos, lugares, emociones, etc).
+        -Que no se repitan y que sean aleatorias
+        -Sin puntos finales, emojis ni texto extra. Salida: SOLO JSON.
+    `,
     });
 
     // Algunas versiones del SDK exponen text() como método
