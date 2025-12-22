@@ -10,7 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { LeaderboardItem } from '../components/LeaderboardItem'
 
 export default function ResultScreen() {
-    const { players,  } = usePlayersStore()
+    const { players,   } = usePlayersStore()
     const winner = selectPlayerWinner(players);
     const navigation = useNavigation<any>();
 
